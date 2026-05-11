@@ -4,3 +4,4 @@
 /idempotence-redis/target/
 /idempotence-spring-boot-autoconfigure/target/
 /idempotence-spring-boot-starter/target/
+/.idea/
