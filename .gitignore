@@ -1,0 +1,6 @@
+# Project exclude paths
+/idempotence-core/target/
+/idempotence-demo/target/
+/idempotence-redis/target/
+/idempotence-spring-boot-autoconfigure/target/
+/idempotence-spring-boot-starter/target/

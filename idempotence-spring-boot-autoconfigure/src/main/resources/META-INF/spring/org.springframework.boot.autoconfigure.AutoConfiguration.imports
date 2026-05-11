@@ -1,0 +1,3 @@
+com.idempotence.idempotencelib.autoconfigure.IdempotenceAutoConfiguration
+com.idempotence.idempotencelib.autoconfigure.IdempotenceRedisAutoConfiguration
+com.idempotence.idempotencelib.autoconfigure.IdempotenceWebAutoConfiguration
