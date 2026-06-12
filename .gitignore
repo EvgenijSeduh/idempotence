@@ -1,7 +1,42 @@
-# Project exclude paths
-/idempotence-core/target/
-/idempotence-demo/target/
-/idempotence-redis/target/
-/idempotence-spring-boot-autoconfigure/target/
-/idempotence-spring-boot-starter/target/
-/.idea/
+# Maven
+target/
+*/target/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+
+# Java
+*.class
+
+# Environment and local config
+.env
+.env.*
+application-local.yml
+application-local.yaml
+application-local.properties
