@@ -20,6 +20,8 @@ public class IdempotenceProperties {
     private String inProgressMessage = "Request is still in progress";
     private String keyPrefix = "idempotence:";
     private long maxBodySize = 1_048_576L;
+    private int payloadTooLargeStatus = 413;
+    private String payloadTooLargeMessage = "Request body is too large for idempotency processing";
     private List<Integer> storedStatuses = List.of();
     private StoredResponseProperties storedResponse = new StoredResponseProperties();
     private boolean cleanupOnException = true;
@@ -56,6 +58,10 @@ public class IdempotenceProperties {
     public void setKeyPrefix(String keyPrefix) { this.keyPrefix = keyPrefix; }
     public long getMaxBodySize() { return maxBodySize; }
     public void setMaxBodySize(long maxBodySize) { this.maxBodySize = maxBodySize; }
+    public int getPayloadTooLargeStatus() { return payloadTooLargeStatus;}
+    public void setPayloadTooLargeStatus(int payloadTooLargeStatus) { this.payloadTooLargeStatus = payloadTooLargeStatus;}
+    public String getPayloadTooLargeMessage() { return payloadTooLargeMessage;}
+    public void setPayloadTooLargeMessage(String payloadTooLargeMessage) { this.payloadTooLargeMessage = payloadTooLargeMessage;}
     public List<Integer> getStoredStatuses() { return storedStatuses; }
     public void setStoredStatuses(List<Integer> storedStatuses) {
         this.storedStatuses = storedStatuses == null ? List.of() : List.copyOf(storedStatuses);

@@ -14,6 +14,9 @@ import java.util.Objects;
 
 public class CachedBodyFilter extends OncePerRequestFilter {
 
+    public static final String BODY_TOO_LARGE_ATTRIBUTE =
+            CachedBodyFilter.class.getName() + ".BODY_TOO_LARGE";
+
     private static final Logger log = LoggerFactory.getLogger(CachedBodyFilter.class);
 
     private final IdempotenceProperties properties;
@@ -23,20 +26,44 @@ public class CachedBodyFilter extends OncePerRequestFilter {
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
-                                    FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain
+    ) throws ServletException, IOException {
         if (request instanceof CachedBodyHttpServletRequest) {
             filterChain.doFilter(request, response);
             return;
         }
-        CachedBodyHttpServletRequest cachedRequest = new CachedBodyHttpServletRequest(request);
+
         long maxBodySize = properties.getMaxBodySize();
-        if (maxBodySize > 0 && cachedRequest.getCachedBodyAsString().getBytes().length > maxBodySize) {
-            log.debug("Request body exceeds maxBodySize ({} bytes); skipping body caching for {}",
-                    maxBodySize, request.getRequestURI());
+        long contentLength = request.getContentLengthLong();
+
+        if (maxBodySize > 0 && contentLength > maxBodySize) {
+            request.setAttribute(BODY_TOO_LARGE_ATTRIBUTE, Boolean.TRUE);
+
+            log.debug(
+                    "Request body exceeds maxBodySize ({} bytes); idempotent request will be rejected: {}",
+                    maxBodySize,
+                    request.getRequestURI()
+            );
+
             filterChain.doFilter(request, response);
             return;
         }
+
+        CachedBodyHttpServletRequest cachedRequest = new CachedBodyHttpServletRequest(request);
+
+        if (maxBodySize > 0 && cachedRequest.getCachedBodySize() > maxBodySize) {
+            cachedRequest.setAttribute(BODY_TOO_LARGE_ATTRIBUTE, Boolean.TRUE);
+
+            log.debug(
+                    "Cached request body exceeds maxBodySize ({} bytes); idempotent request will be rejected: {}",
+                    maxBodySize,
+                    request.getRequestURI()
+            );
+        }
+
         filterChain.doFilter(cachedRequest, response);
     }
 }

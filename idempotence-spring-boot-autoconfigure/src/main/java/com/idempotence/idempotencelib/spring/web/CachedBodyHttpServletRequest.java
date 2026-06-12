@@ -39,9 +39,15 @@ public class CachedBodyHttpServletRequest extends HttpServletRequestWrapper {
         return new BufferedReader(new InputStreamReader(getInputStream(), charset));
     }
 
+    public int getCachedBodySize() {
+        return cachedBody.length;
+    }
+
     public String getCachedBodyAsString() {
         Charset charset = getCharacterEncoding() == null
-                ? StandardCharsets.UTF_8 : Charset.forName(getCharacterEncoding());
+                ? StandardCharsets.UTF_8
+                : Charset.forName(getCharacterEncoding());
+
         return new String(cachedBody, charset);
     }
 }

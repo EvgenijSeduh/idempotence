@@ -56,6 +56,20 @@ public class IdempotenceInterceptor implements HandlerInterceptor {
             return false;
         }
         if (key == null) return true;
+        if (Boolean.TRUE.equals(request.getAttribute(CachedBodyFilter.BODY_TOO_LARGE_ATTRIBUTE))) {
+            log.debug(
+                    "Request body is too large for idempotency processing: uri={}",
+                    request.getRequestURI()
+            );
+
+            writeJsonError(
+                    response,
+                    properties.getPayloadTooLargeStatus(),
+                    properties.getPayloadTooLargeMessage()
+            );
+
+            return false;
+        }
 
         String fingerprint = fingerprintBuilder.build(request);
         log.debug("Idempotency check: key={}, uri={}", key, request.getRequestURI());
