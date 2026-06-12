@@ -106,9 +106,9 @@ idempotence-parent/
 │   ├── autoconfigure/  IdempotenceAutoConfiguration, ...
 │   └── spring/web/     Interceptor, ResponseBodyAdvice, Filter, ...
 │
-├── idempotence-spring-boot-starter/        # Стартер — одна зависимость для подключения
-│
-└── idempotence-demo/                       # Демо-приложение (см. demo/)
+└── idempotence-spring-boot-starter/        # Стартер — одна зависимость для подключения
+
+
 ```
 
 ---
@@ -211,20 +211,6 @@ IdempotenceAutoConfigurationTest,IdempotenceRedisAutoConfigurationTest,\
 IdempotenceWebAutoConfigurationTest,IdempotencePropertiesBindingTest,\
 RedisIdempotenceStoreFailurePolicyTest"
 ```
-
----
-
-## Демо-приложение
-
-Полный пример использования находится в `demo/`. Демонстрирует все 4 сценария через Postman.
-
-```bash
-# Запуск через Docker Compose
-cd demo
-docker-compose up
-```
-
-Подробнее: [demo/README.md](../demo/README.md)
 
 ---
 

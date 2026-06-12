@@ -28,7 +28,6 @@
         <module>idempotence-redis</module>
         <module>idempotence-spring-boot-autoconfigure</module>
         <module>idempotence-spring-boot-starter</module>
-        <module>idempotence-demo</module>
     </modules>
 
 </project>
