@@ -10,8 +10,6 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 @SpringBootConfiguration
 @EnableAutoConfiguration
@@ -21,22 +19,6 @@ import org.springframework.data.redis.core.StringRedisTemplate;
         IdempotenceWebAutoConfiguration.class
 })
 public class TestWebConfiguration {
-
-    @Bean
-    public LettuceConnectionFactory lettuceConnectionFactory() {
-        String host = System.getProperty("redis.host", "127.0.0.1");
-        int port = Integer.parseInt(System.getProperty("redis.port", "6379"));
-        LettuceConnectionFactory factory = new LettuceConnectionFactory(host, port);
-        factory.afterPropertiesSet();
-        return factory;
-    }
-
-    @Bean
-    public StringRedisTemplate stringRedisTemplate(LettuceConnectionFactory connectionFactory) {
-        StringRedisTemplate template = new StringRedisTemplate(connectionFactory);
-        template.afterPropertiesSet();
-        return template;
-    }
 
     @Bean
     public ObjectMapper objectMapper() {
